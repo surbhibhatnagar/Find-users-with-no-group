@@ -8,9 +8,9 @@ This bash script creates database and necessary tables from testuser.txt and tes
 
 It then saves the users that do not belong to a group in result[0-9]\*.txt file
 The 3 cases where a user is considered to not have a group are:
-1. Group_id is null for a user in testuser.txt
-2. Group_id is defined for a user in testgroup.txt but the Group does not exist.
-3. Group_id is defined for a user in testgroup.txt but the Group does not contain the said user.
+1. Group_id is null for the user in testuser.txt
+2. Group_id is defined for the user in testgroup.txt but the Group does not exist.
+3. Group_id is defined for the user in testgroup.txt but the Group does not contain the said user.
 
 ### To Run:
 #### Prereq: 
