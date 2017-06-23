@@ -22,4 +22,4 @@ The 3 cases where a user is considered to not have a group are:
    <b>sudo chmod 600 /etc/my.confg </b>
 Note: This script is test on Mac OS platform, it may not work properly on other platforms.
 #### To run the script:
-<b>./dbscript.sh <dbname> <dbuser> <dbpwd> </b>
+<b>./dbscript.sh [dbname] [dbuser] [dbpwd] </b>
