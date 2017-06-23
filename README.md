@@ -2,12 +2,11 @@
 ### Summary:
 This bash script creates database and necessary tables from testuser.txt and testgroup.txt.
 
-| File   | Line Format   | Example  |
--------------------------------------
-| testuser| id:name:group_id| 1:surbhi:8 |
--------------------------------------------
-| testgroup| id:name:user_ids|  8:group8:1,5,7|
------------------------------------------------
+| File      | Line Format    | Example    |
+|-----------|----------------|------------|
+|testuser   |id:name:group_id|1:surbhi:8  |
+|-----------|----------------|------------|
+|testgroup  |id:name:user_ids|8:group8:1,5|
 
 It then saves the users that do not belong to a group in result[0-9]\*.txt file
 The 3 cases where a user is considered to not have a group are:
