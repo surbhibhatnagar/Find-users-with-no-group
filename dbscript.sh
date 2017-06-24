@@ -61,14 +61,16 @@ ok "user-group table created"
 #Populate user table
 # LOAD DATA INFILE is faster than INSERT STATEMENTS
 #Security hole: find another way
-Q1="LOAD DATA LOCAL INFILE '/Users/surbhibhatnagar/testuser.txt' INTO TABLE"
+# Note: Add absolute path of testuser.txt file in userspathplaceholder in line 65
+Q1="LOAD DATA LOCAL INFILE [userspathplaceholder] INTO TABLE"
 Q2=" user COLUMNS TERMINATED BY ':';"
 DSQL="${Q1}${Q2}"
 $MYSQL --local-infile -D$1 -e "$DSQL"
 ok "user table populated"
 
 #Populate group table
-Q1="LOAD DATA LOCAL INFILE '/Users/surbhibhatnagar/testgroup.txt'"
+# Note: Add absolute path of testgroup.txt file in groupspathplaceholder in line 73
+Q1="LOAD DATA LOCAL INFILE [groupspathplaceholder]"
 Q2=" INTO TABLE GroupTable FIELDS TERMINATED BY ':';"
 DSQL="${Q1}${Q2}"
 $MYSQL --local-infile -D$1 -e "$DSQL"
@@ -77,8 +79,9 @@ ok "group table populated"
 #Populate user-group mapping table
 #Store necessary fields i.e. $1 and comma separated values in $3 converted to
 #rows in a separate file
+# Note: Add absolute path of testusergroup.txt file in usergroupspathplaceholder in line 84
 awk  '{if(match($3,/^([1-9][0-9]*,)+[1-9][0-9]*$/)) {split($3,a,","); for(i in a) print $1":"a[i];}  else print $1":"$3}' FS=":" testgroup.txt > testusergroup.txt
-Q1="LOAD DATA LOCAL INFILE '/Users/surbhibhatnagar/testusergroup.txt'"
+Q1="LOAD DATA LOCAL INFILE [usergroupspathplaceholder]"
 Q2=" INTO TABLE UserGroupTable FIELDS TERMINATED BY ':';"
 DSQL="${Q1}${Q2}"
 $MYSQL --local-infile -D$1 -e "$DSQL"
@@ -93,11 +96,12 @@ Q2="ALTER TABLE UserGroupTable ADD INDEX ug_index(GId,UG_UId);"
 DSQL="${Q2}"
 $MYSQL --local-infile -D$1 -e "$DSQL"
 
-#Fetch users with no groups as per pre-defined rules
+#Fetch users with no groups : left join user and usergroup table, return rows where usergroup.ug_id was null
+# Note: Add absolute path of testusergroup.txt file in resultspathplaceholder in line 104
 Q1="Select nogroup.id, nogroup.name  From ( select u.id,u.name,ug.ug_uid from"
 Q2=" user AS u LEFT JOIN usergrouptable AS ug ON u.id =ug.ug_uid AND u.gid=ug"
 Q3=".gid) nogroup where nogroup.ug_uid IS NULL INTO OUTFILE"
-Q4=" '/Users/surbhibhatnagar/results$RANDOM.txt';"
+Q4=" '[resultspathplaceholder]results$RANDOM.txt';"
 DSQL="${Q1}${Q2}${Q3}${Q4}"
 $MYSQL --local-infile -D$1 -e "$DSQL"
 
