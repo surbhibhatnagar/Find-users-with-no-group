@@ -21,6 +21,7 @@ The 3 cases where a user is considered to not have a group are:
    Update username and password of MySQL server in [client] section.
 4. Restrict access permission of my.conf file to current user
    <b>sudo chmod 600 /etc/my.confg </b>
+5. Update absolute path of input and output files in script    
 Note: This script is test on Mac OS platform, it may not work properly on other platforms.
 #### To run the script:
 <b>./dbscript.sh [dbname] [dbuser] [dbpwd] </b>
