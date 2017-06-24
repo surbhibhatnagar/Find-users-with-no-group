@@ -97,6 +97,7 @@ DSQL="${Q2}"
 $MYSQL --local-infile -D$1 -e "$DSQL"
 
 #Fetch users with no groups : left join user and usergroup table, return rows where usergroup.ug_id was null
+#Usinhg sub query is not the best way to go about it as far as performance is concerned
 # Note: Add absolute path of testusergroup.txt file in resultspathplaceholder in line 104
 Q1="Select nogroup.id, nogroup.name  From ( select u.id,u.name,ug.ug_uid from"
 Q2=" user AS u LEFT JOIN usergrouptable AS ug ON u.id =ug.ug_uid AND u.gid=ug"
